@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public SpriteRenderer SR;
     public float movementSpeed = 2;
 
     // Start is called before the first frame update
@@ -17,6 +18,19 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
+        FlipSprite();
+    }
+
+    void FlipSprite()
+    {
+        if(rb.velocity.x <= 1)
+        {
+            SR.flipX = true;
+        }
+        else if(rb.velocity.x >= 1)
+        {
+            SR.flipX = false;
+        }
     }
 
 
