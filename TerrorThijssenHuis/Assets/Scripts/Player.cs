@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public GameManager gameManager;
+
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     public float movementSpeed = 2.5f;
@@ -112,6 +114,7 @@ public class Player : MonoBehaviour
     public void LoseLife()
     {
         lives--;
+        gameManager.LivesUI(lives);
         if (lives <= 0)
         {
             Debug.Log("You died");

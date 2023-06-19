@@ -5,16 +5,25 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float movementSpeed = 2f;
+
     public float knockbackForce = 100f;
     public float slideDuration = 0.2f;
+
     private Transform target;
     private SpriteRenderer sr;
     private Rigidbody2D playerRigidbody;
     private Coroutine slideCoroutine;
 
+    public float maxDistanceFromStart = 3f;
+
+    private Vector2 startingPosition;
+    private Vector2 targetPosition;
+
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        startingPosition = transform.position;
+        SetRandomTargetPosition();
     }
 
     private void Update()
@@ -33,6 +42,33 @@ public class Enemy : MonoBehaviour
                 sr.flipX = false;
             }
         }
+        else
+        {
+            if (ReachedTargetPosition())
+            {
+                SetRandomTargetPosition();
+            }
+            
+            MoveTowardsTargetPosition();
+        }
+    }
+
+    private bool ReachedTargetPosition()
+    {
+        return Vector2.Distance(transform.position, targetPosition) < 0.1f;
+    }
+
+    private void SetRandomTargetPosition()
+    {
+        float randomX = Random.Range(startingPosition.x - maxDistanceFromStart, startingPosition.x + maxDistanceFromStart);
+        float randomY = Random.Range(startingPosition.y - maxDistanceFromStart, startingPosition.y + maxDistanceFromStart);
+        targetPosition = new Vector2(randomX, randomY);
+    }
+
+    private void MoveTowardsTargetPosition()
+    {
+        float step = movementSpeed * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -62,7 +98,7 @@ public class Enemy : MonoBehaviour
                 playerController.LoseLife();
                 
                 Vector2 knockbackDirection = (other.transform.position - transform.position);
-                playerRigidbody.velocity = Vector2.zero; // Reset player's velocity
+                playerRigidbody.velocity = Vector2.zero;
                 playerRigidbody.AddForce(knockbackDirection * knockbackForce);
 
                 if (slideCoroutine != null)
