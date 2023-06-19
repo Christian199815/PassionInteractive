@@ -1623,6 +1623,7 @@ GameObject:
   - component: {fileID: 456656220}
   - component: {fileID: 456656219}
   - component: {fileID: 456656218}
+  - component: {fileID: 456656221}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1638,7 +1639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456656214}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00020912, y: 21.66, z: 0}
+  m_LocalPosition: {x: 0, y: 21.66, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1658,8 +1659,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 6
+  notHit: 1
   interactionText: {fileID: 159615191}
   interactionTextOffset: {x: 200, y: 75}
+  spriteMaterials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 49f4328333362f5c3b5efd057b4c47e9, type: 2}
 --- !u!50 &456656217
 Rigidbody2D:
   serializedVersion: 4
@@ -1672,9 +1677,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 10
+  m_LinearDrag: 5
+  m_AngularDrag: 5
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1819,6 +1824,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.053000376, y: -1.8922119}
   m_Size: {x: 2.3939998, y: 4.3955765}
   m_Direction: 0
+--- !u!114 &456656221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456656214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c099c610bd0917d4e8480a2be211648e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &472199250
 GameObject:
   m_ObjectHideFlags: 0
@@ -4200,7 +4217,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1000
   m_Sprite: {fileID: 21300000, guid: a998f4f5c91bf4d35bd60b2670d7370c, type: 3}
   m_Color: {r: 0.2830189, g: 0.27367392, b: 0.27367392, a: 1}
   m_FlipX: 0
@@ -7126,6 +7143,7 @@ GameObject:
   - component: {fileID: 1795801968}
   - component: {fileID: 1795801967}
   - component: {fileID: 1795801966}
+  - component: {fileID: 1795801970}
   m_Layer: 0
   m_Name: Teacher
   m_TagString: Untagged
@@ -7213,6 +7231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
+  knockbackForce: 5000
+  slideDuration: 0.5
 --- !u!58 &1795801968
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7283,6 +7303,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -1.2581778}
   serializedVersion: 2
   m_Radius: 2.4301767
+--- !u!114 &1795801970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795801961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c099c610bd0917d4e8480a2be211648e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1818790847
 GameObject:
   m_ObjectHideFlags: 0

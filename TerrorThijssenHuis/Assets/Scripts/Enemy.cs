@@ -5,8 +5,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float movementSpeed = 2f;
+    public float knockbackForce = 100f;
+    public float slideDuration = 0.2f;
     private Transform target;
     private SpriteRenderer sr;
+    private Rigidbody2D playerRigidbody;
+    private Coroutine slideCoroutine;
 
     private void Start()
     {
@@ -45,5 +49,38 @@ public class Enemy : MonoBehaviour
         {
             target = null;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            playerRigidbody = other.gameObject.GetComponent<Rigidbody2D>();
+            Player playerController = other.gameObject.GetComponent<Player>();
+            if (playerController != null)
+            {
+                playerController.LoseLife();
+                
+                Vector2 knockbackDirection = (other.transform.position - transform.position);
+                playerRigidbody.velocity = Vector2.zero; // Reset player's velocity
+                playerRigidbody.AddForce(knockbackDirection * knockbackForce);
+
+                if (slideCoroutine != null)
+                {
+                    StopCoroutine(slideCoroutine);
+                }
+                slideCoroutine = StartCoroutine(SlideCoroutine(playerController));
+            }
+        }
+    }
+
+    private IEnumerator SlideCoroutine(Player player)
+    {
+        player.notHit = false;
+        player.gameObject.GetComponent<SpriteRenderer>().material = player.spriteMaterials[1];
+        yield return new WaitForSeconds(slideDuration);
+        player.notHit = true;
+        player.gameObject.GetComponent<SpriteRenderer>().material = player.spriteMaterials[0];
+        slideCoroutine = null;
     }
 }

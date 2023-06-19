@@ -9,11 +9,15 @@ public class Player : MonoBehaviour
     private SpriteRenderer sr;
     public float movementSpeed = 2.5f;
 
+    private int lives = 5;
     private List<string> inventory = new List<string>();
     private bool nearDoor = false;
+    [HideInInspector] public bool notHit = true;
 
     public Text interactionText;
     [SerializeField] private Vector2 interactionTextOffset = new Vector2();
+
+    public Material[] spriteMaterials;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +29,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        FlipSprite();
-        CheckDoor();
+        if (notHit)
+        {
+            Move();
+            FlipSprite();
+            CheckDoor();
+        }
     }
 
     void Move()
@@ -36,7 +43,6 @@ public class Player : MonoBehaviour
         float verInput = Input.GetAxisRaw("Vertical");
 
         rb.velocity = new Vector2(horInput * movementSpeed, verInput * movementSpeed);
-        
     }
 
     void FlipSprite()
@@ -100,6 +106,15 @@ public class Player : MonoBehaviour
         if (other.tag == "Door")
         {
             nearDoor = false;
+        }
+    }
+
+    public void LoseLife()
+    {
+        lives--;
+        if (lives <= 0)
+        {
+            Debug.Log("You died");
         }
     }
 }
