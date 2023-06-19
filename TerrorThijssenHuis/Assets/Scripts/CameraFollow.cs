@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public float interpVelocity;
-    public float minDistance;
-    public float followDistance;
+    private float interpVelocity;
     public GameObject target;
     public Vector3 offset;
     private Vector3 targetPos;
