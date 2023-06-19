@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour
     public GameObject target;
     public Vector3 offset;
     private Vector3 targetPos;
+    public float interpSpeed;
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class CameraFollow : MonoBehaviour
             posNoZ.z = target.transform.position.z;
 
             Vector3 targetDirection = (target.transform.position - posNoZ);
-            interpVelocity = targetDirection.magnitude * 5f;
+            interpVelocity = targetDirection.magnitude * interpSpeed;
 
             targetPos = transform.position + (targetDirection.normalized * interpVelocity * Time.deltaTime);
             transform.position = Vector3.Lerp(transform.position, targetPos + offset, 0.25f);

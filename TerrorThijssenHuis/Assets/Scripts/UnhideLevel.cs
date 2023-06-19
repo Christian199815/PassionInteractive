@@ -14,17 +14,17 @@ public class UnhideLevel : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Player"))
-       {
-           sr.color = new Color(0, 0, 0, 0);
-       }
+        {
+            sr.color = new Color(0, 0, 0, 0);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Player"))
-       {
-           sr.color = new Color(0, 0, 0, 255);
-       }
+        {
+            sr.color = new Color(0, 0, 0, 255);
+        }
     }
 
 }
