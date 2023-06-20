@@ -28,6 +28,10 @@ public class Enemy : MonoBehaviour
     public float roomBounds;
     private bool inNativeRoom = true;
 
+    private bool isIdleMoving;
+    private float movementDuration = 5f;
+    private float movementTimer;
+
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -46,7 +50,7 @@ public class Enemy : MonoBehaviour
             sr.flipX = false;
         }
 
-        if (transform.position.x < roomBounds)
+        if (Mathf.Abs(transform.position.x) < Mathf.Abs(roomBounds))
         {
             inNativeRoom = false;
         }
@@ -79,13 +83,23 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                if (ReachedTargetPosition())
+                if (isIdleMoving && movementTimer >= movementDuration)
                 {
+                    isIdleMoving = false;
+                    SetRandomTargetPosition();
+                }
+
+                if (!isIdleMoving)
+                {
+                    isIdleMoving = true;
+                    movementTimer = 0f;
                     SetRandomTargetPosition();
                 }
             }
 
             MoveTowardsTargetPosition();
+
+            movementTimer += Time.deltaTime;
         }
     }
 
