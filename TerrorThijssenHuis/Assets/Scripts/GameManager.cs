@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject occlusionSquares;
-    public List<GameObject> livesObjects = new List<GameObject>();
+    public GameObject[] livesObjects;
     [SerializeField] private GameObject deathBackground;
     [SerializeField] private GameObject deathUI;
     public Color hiddenColor;
@@ -39,58 +39,72 @@ public class GameManager : MonoBehaviour
         player.transform.position = new Vector3(-12, -46 ,transform.position.z);
     }
 
-    void DisplayLivesUI()
-    {
-        switch(player.lives)
-        {
-            case 5:
-                livesObjects[4].SetActive(true);
-                livesObjects[3].SetActive(true);
-                livesObjects[2].SetActive(true);
-                livesObjects[1].SetActive(true);
-                livesObjects[0].SetActive(true);
-                break;
-            case 4:
-                livesObjects[4].SetActive(false);
-                livesObjects[3].SetActive(true);
-                livesObjects[2].SetActive(true);
-                livesObjects[1].SetActive(true);
-                livesObjects[0].SetActive(true);
-                break;
-            case 3:
-                livesObjects[3].SetActive(false);
-                livesObjects[2].SetActive(true);
-                livesObjects[1].SetActive(true);
-                livesObjects[0].SetActive(true);
-                break;
-            case 2:
-                livesObjects[2].SetActive(false);
-                livesObjects[1].SetActive(true);
-                livesObjects[0].SetActive(true);
-                break;
-            case 1:
-                livesObjects[1].SetActive(false);
-                livesObjects[0].SetActive(true);
-                break;
-        }
+    // void DisplayLivesUI()
+    // {
+    //     switch(player.lives)
+    //     {
+    //         case 5:
+    //             livesObjects[4].SetActive(true);
+    //             livesObjects[3].SetActive(true);
+    //             livesObjects[2].SetActive(true);
+    //             livesObjects[1].SetActive(true);
+    //             livesObjects[0].SetActive(true);
+    //             break;
+    //         case 4:
+    //             livesObjects[4].SetActive(false);
+    //             livesObjects[3].SetActive(true);
+    //             livesObjects[2].SetActive(true);
+    //             livesObjects[1].SetActive(true);
+    //             livesObjects[0].SetActive(true);
+    //             break;
+    //         case 3:
+    //             livesObjects[3].SetActive(false);
+    //             livesObjects[2].SetActive(true);
+    //             livesObjects[1].SetActive(true);
+    //             livesObjects[0].SetActive(true);
+    //             break;
+    //         case 2:
+    //             livesObjects[2].SetActive(false);
+    //             livesObjects[1].SetActive(true);
+    //             livesObjects[0].SetActive(true);
+    //             break;
+    //         case 1:
+    //             livesObjects[1].SetActive(false);
+    //             livesObjects[0].SetActive(true);
+    //             break;
+    //     }
     
-    }
+    // }
 
 
-    private void Update()
+    // private void Update()
+    // {
+    //     DisplayLivesUI();
+    // }
+
+    public void AddLifeUI(int life)
     {
-        DisplayLivesUI();
+        if (life >= 0 && life < livesObjects.Length)
+        {
+            livesObjects[life].gameObject.SetActive(true);
+        }
     }
 
-    //public void RemoveLifeUI(int life)
-    //{
-    //    livesImages.Remove(livesImages[life]);
-    //}
+    public void RemoveLifeUI(int life)
+    {
+        int minLife = Mathf.Max(0, life);
 
-    //public void AddLifeUI(int life)
-    //{
-    //    livesImages.Add(livesImages[life]);
-    //}
+        if (minLife >= 0)
+        {
+            for (int i = minLife; i <= 4; i++)
+            {
+                if (i < livesObjects.Length)
+                {
+                    livesObjects[i].gameObject.SetActive(false);
+                }
+            }
+        }
+    }
 
     public void Death()
     {

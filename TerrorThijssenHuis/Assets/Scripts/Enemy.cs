@@ -34,6 +34,10 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
+        startingPosition = transform.position;
+        SetRandomTargetPosition();
+    }
 
     private void Update()
     {
@@ -48,9 +52,7 @@ public class Enemy : MonoBehaviour
 
         if (Mathf.Abs(transform.position.x) < Mathf.Abs(roomBounds))
         {
-            sr = GetComponent<SpriteRenderer>();
-            startingPosition = transform.position;
-            SetRandomTargetPosition();
+            inNativeRoom = false;
         }
 
         else
@@ -99,14 +101,72 @@ public class Enemy : MonoBehaviour
 
             movementTimer += Time.deltaTime;
         }
+    }
 
-        private IEnumerator SlideCoroutine(Player player)
+    private bool ReachedTargetPosition()
+    {
+        return Vector2.Distance(transform.position, targetPosition) < 0.1f;
+    }
+
+    private void SetRandomTargetPosition()
+    {
+        float randomX = Random.Range(startingPosition.x - maxDistanceFromStart, startingPosition.x + maxDistanceFromStart);
+        float randomY = Random.Range(startingPosition.y - maxDistanceFromStart, startingPosition.y + maxDistanceFromStart);
+        targetPosition = new Vector2(randomX, randomY);
+    }
+
+    private void MoveTowardsTargetPosition()
+    {
+        float step = movementSpeed * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
         {
-            player.notHit = false;
-            player.gameObject.GetComponent<SpriteRenderer>().material = player.spriteMaterials[1];
-            yield return new WaitForSeconds(slideDuration);
-            player.notHit = true;
-            player.gameObject.GetComponent<SpriteRenderer>().material = player.spriteMaterials[0];
-            slideCoroutine = null;
+            target = other.transform;
         }
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            target = null;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            playerRigidbody = other.gameObject.GetComponent<Rigidbody2D>();
+            Player playerController = other.gameObject.GetComponent<Player>();
+            if (playerController != null)
+            {
+                playerController.LoseLife(damageAmount);
+                
+                Vector2 knockbackDirection = (other.transform.position - transform.position);
+                playerRigidbody.velocity = Vector2.zero;
+                playerRigidbody.AddForce(knockbackDirection * knockbackForce);
+
+                if (slideCoroutine != null)
+                {
+                    StopCoroutine(slideCoroutine);
+                }
+                slideCoroutine = StartCoroutine(SlideCoroutine(playerController));
+            }
+        }
+    }
+
+    private IEnumerator SlideCoroutine(Player player)
+    {
+        player.notHit = false;
+        player.gameObject.GetComponent<SpriteRenderer>().material = player.spriteMaterials[1];
+        yield return new WaitForSeconds(slideDuration);
+        player.notHit = true;
+        player.gameObject.GetComponent<SpriteRenderer>().material = player.spriteMaterials[0];
+        slideCoroutine = null;
+    }
+}

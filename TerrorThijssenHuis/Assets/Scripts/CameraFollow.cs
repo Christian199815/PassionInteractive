@@ -59,7 +59,6 @@ public class CameraFollow : MonoBehaviour
         {
             this.transform.position = CameraRoomPositions[9].position;
         }
-
     }
 
 

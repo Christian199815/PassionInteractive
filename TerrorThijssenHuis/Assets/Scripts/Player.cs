@@ -205,11 +205,10 @@ public class Player : MonoBehaviour
     //    lives = 5;
     //}
 
-
-
     public void LoseLife(int damage)
     {
         lives = lives - damage;
+        gameManager.RemoveLifeUI(lives);
         if (lives <= 0)
         {
             gameManager.Death();
@@ -243,7 +242,7 @@ public class Player : MonoBehaviour
 
             if (lives < 5)
             {
-                // Add 1 to live
+                gameManager.AddLifeUI(lives);
                 lives++;
             }
         }
