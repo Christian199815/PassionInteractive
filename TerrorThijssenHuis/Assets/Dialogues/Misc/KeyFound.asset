@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02db48ad016174b6db6d6a6804913576, type: 3}
   m_Name: KeyFound
   m_EditorClassIdentifier: 
-  location: Not Important
-  action: KeyFound
-  message: Yes, dit is volgens mij de sleutel die ik zoek
+  message: Yes, dit is volgens mij de sleutel die ik zoek!

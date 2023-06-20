@@ -9,6 +9,8 @@ public class UnhideLevel : MonoBehaviour
     private CameraFollow CF;
     public int locationIndex;
 
+    public Color hiddenColor;
+
     private bool UITriggered;
 
     private void Start()
@@ -16,7 +18,6 @@ public class UnhideLevel : MonoBehaviour
         SR = GetComponent<SpriteRenderer>();
         CF = FindObjectOfType<Camera>().GetComponent<CameraFollow>();
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,7 +34,7 @@ public class UnhideLevel : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
        {
             CF.playerLocs[locationIndex] = false;
-            SR.color = new Color(0, 0, 0, 255);
+            SR.color = hiddenColor;
        }
     }
 }

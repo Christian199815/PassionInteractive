@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02db48ad016174b6db6d6a6804913576, type: 3}
   m_Name: Message1
   m_EditorClassIdentifier: 
-  location: NotImportant
-  action: PickUp
-  message: '"Aanstaande Vrijdag is de Borrel van IAMCore, kom je ook, Het wordt super
-    gezellig'
+  message: '"Aanstaande Vrijdag is de Borrel van IAMCore, kom je ook? Het wordt super
+    gezellig!"'

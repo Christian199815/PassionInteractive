@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02db48ad016174b6db6d6a6804913576, type: 3}
   m_Name: LiftEnd5
   m_EditorClassIdentifier: 
-  location: LiftEnd
-  action: FullScreen
   message: Soms moet je wel een beetje op jezelf letten, want voor je het weet ga
-    je je dingen inbeelden, en zie niet meer wat wel echt de realiteit is
+    je je dingen inbeelden, en zie niet meer wat wel echt de realiteit is.
