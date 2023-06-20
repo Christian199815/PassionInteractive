@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private List<string> inventory = new List<string>();
     private bool nearDoor = false;
     [HideInInspector] public bool inSafeRoom = false;
+    private Coroutine addLivesCoroutine;
     [HideInInspector] public bool notHit = true;
 
     public Text interactionText;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
             Move();
             FlipSprite();
             CheckDoor();
+            RegenerateHealth();
         }
     }
 
@@ -134,6 +136,36 @@ public class Player : MonoBehaviour
         if (lives <= 0)
         {
             gameManager.Death();
+        }
+    }
+
+    void RegenerateHealth()
+    {
+        if (inSafeRoom)
+        {
+            if (addLivesCoroutine == null)
+            {
+                addLivesCoroutine = StartCoroutine(AddLivesCoroutine());
+            }
+        }
+        else
+        {
+            if (addLivesCoroutine != null)
+            {
+                StopCoroutine(addLivesCoroutine);
+                addLivesCoroutine = null;
+            }
+        }
+    }
+
+    private IEnumerator AddLivesCoroutine()
+    {
+        while (true)
+        {
+            // Add 1 to lives
+            lives += 1;
+
+            yield return new WaitForSeconds(3f);
         }
     }
 }

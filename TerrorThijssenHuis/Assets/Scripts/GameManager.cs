@@ -22,9 +22,17 @@ public class GameManager : MonoBehaviour
 
     public void LivesUI(int life)
     {
-        if (life > 0)
+        int minLife = Mathf.Max(0, life);
+
+        if (minLife >= 0)
         {
-            Destroy(livesImages[life]);
+            for (int i = minLife; i <= 4; i++)
+            {
+                if (i < livesImages.Length)
+                {
+                    Destroy(livesImages[i]);
+                }
+            }
         }
     }
 

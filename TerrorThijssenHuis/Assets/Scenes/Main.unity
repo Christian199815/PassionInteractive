@@ -11188,7 +11188,7 @@ MonoBehaviour:
   movementSpeed: 2
   knockbackForce: 5000
   slideDuration: 0.5
-  damageAmount: 2
+  damageAmount: 1
   maxDistanceFromStart: 3
   player: {fileID: 456656216}
   roomBounds: 8.5
