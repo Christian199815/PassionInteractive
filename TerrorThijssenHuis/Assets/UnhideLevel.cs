@@ -5,33 +5,26 @@ using UnityEngine;
 public class UnhideLevel : MonoBehaviour
 {
     public SpriteRenderer SR;
+    public DialogueUI DUI;
+    public CameraFollow CF;
+    public int locationIndex;
+
+    private bool UITriggered;
 
     private void Start()
     {
         SR = GetComponent<SpriteRenderer>();
+        CF = FindObjectOfType<Camera>().GetComponent<CameraFollow>();
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if(collision.transform.CompareTag("Player"))
-    //    {
-    //        SR.color = new Color(0, 0, 0, 0);
-    //    }
-    //}
-
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (collision.transform.CompareTag("Player"))
-    //    {
-    //        SR.color = new Color(0, 0, 0, 255);
-    //    }
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+       if (collision.transform.CompareTag("Player"))
        {
-           SR.color = new Color(0, 0, 0, 0);
+            if (!UITriggered) { DUI.playRoomMessage(this.name); UITriggered = true; }
+            CF.playerLocs[locationIndex] = true;
+            SR.color = new Color(0, 0, 0, 0);
        }
     }
 
@@ -39,7 +32,8 @@ public class UnhideLevel : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
        {
-           SR.color = new Color(0, 0, 0, 255);
+            CF.playerLocs[locationIndex] = false;
+            SR.color = new Color(0, 0, 0, 255);
        }
     }
 
