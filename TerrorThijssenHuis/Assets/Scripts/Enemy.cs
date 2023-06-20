@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                Debug.Log("Hi");
+                // Check of ze in hallway of kamer zijn
             }
 
             MoveTowardsTargetPosition();

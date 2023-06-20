@@ -20,7 +20,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LivesUI(int life)
+    public void AddLive(int life)
+    {
+        if (life >= 0 && life < livesImages.Length)
+        {
+            livesImages[life].gameObject.SetActive(true);
+        }
+    }
+
+    public void RemoveLive(int life)
     {
         int minLife = Mathf.Max(0, life);
 
@@ -30,7 +38,7 @@ public class GameManager : MonoBehaviour
             {
                 if (i < livesImages.Length)
                 {
-                    Destroy(livesImages[i]);
+                    livesImages[i].gameObject.SetActive(false);
                 }
             }
         }
