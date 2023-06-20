@@ -22,7 +22,10 @@ public class GameManager : MonoBehaviour
 
     public void LivesUI(int life)
     {
-        Destroy(livesImages[life]);
+        if (life > 0)
+        {
+            Destroy(livesImages[life]);
+        }
     }
 
     public void Death()

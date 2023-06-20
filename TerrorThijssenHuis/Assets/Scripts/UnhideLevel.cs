@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class UnhideLevel : MonoBehaviour
 {
-    public SpriteRenderer SR;
+    private SpriteRenderer SR;
     public DialogueUI DUI;
-    public CameraFollow CF;
+    private CameraFollow CF;
     public int locationIndex;
 
     private bool UITriggered;

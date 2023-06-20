@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
     public float movementSpeed = 2f;
 
     public float knockbackForce = 100f;
     public float slideDuration = 0.2f;
+
+    public int damageAmount;
 
     private Transform target;
     private SpriteRenderer sr;
@@ -19,6 +22,10 @@ public class Enemy : MonoBehaviour
     private Vector2 startingPosition;
     private Vector2 targetPosition;
 
+    public Player player;
+    public float roomBounds;
+    private bool inNativeRoom = true;
+
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -28,6 +35,11 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.x < roomBounds)
+        {
+            inNativeRoom = false;
+        }
+
         if (target != null)
         {
             float step = movementSpeed * Time.deltaTime;
@@ -44,11 +56,18 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (ReachedTargetPosition())
+            if (player.inSafeRoom == false)
             {
-                SetRandomTargetPosition();
+                if (ReachedTargetPosition())
+                {
+                    SetRandomTargetPosition();
+                }
             }
-            
+            else
+            {
+                Debug.Log("Hi");
+            }
+
             MoveTowardsTargetPosition();
         }
     }
@@ -95,7 +114,7 @@ public class Enemy : MonoBehaviour
             Player playerController = other.gameObject.GetComponent<Player>();
             if (playerController != null)
             {
-                playerController.LoseLife();
+                playerController.LoseLife(damageAmount);
                 
                 Vector2 knockbackDirection = (other.transform.position - transform.position);
                 playerRigidbody.velocity = Vector2.zero;

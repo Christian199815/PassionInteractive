@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private int lives = 5;
     private List<string> inventory = new List<string>();
     private bool nearDoor = false;
-    private bool inSafeRoom = false;
+    [HideInInspector] public bool inSafeRoom = false;
     [HideInInspector] public bool notHit = true;
 
     public Text interactionText;
@@ -127,9 +127,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void LoseLife()
+    public void LoseLife(int damage)
     {
-        lives--;
+        lives = lives - damage;
         gameManager.LivesUI(lives);
         if (lives <= 0)
         {
