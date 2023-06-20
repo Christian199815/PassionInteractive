@@ -10,7 +10,7 @@ public class DialogueUI : MonoBehaviour
 
     public int currMessageIndex = -1;
 
-    public TMP_Text dialogueText;
+    public Text dialogueText;
 
     public int messageDisplaySeconds = 3;
 

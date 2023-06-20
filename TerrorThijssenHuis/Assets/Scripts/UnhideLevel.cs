@@ -36,5 +36,4 @@ public class UnhideLevel : MonoBehaviour
             SR.color = new Color(0, 0, 0, 255);
        }
     }
-
 }
