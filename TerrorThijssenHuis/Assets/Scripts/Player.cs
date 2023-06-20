@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private int lives = 5;
     private List<string> inventory = new List<string>();
     private bool nearDoor = false;
+    private bool inSafeRoom = false;
     [HideInInspector] public bool notHit = true;
 
     public Text interactionText;
@@ -101,6 +102,11 @@ public class Player : MonoBehaviour
         {
             nearDoor = true;
         }
+
+        if (other.tag == "SafeRoom")
+        {
+            inSafeRoom = true;
+        }
     }
     
     private void OnTriggerExit2D(Collider2D other)
@@ -108,6 +114,11 @@ public class Player : MonoBehaviour
         if (other.tag == "Door")
         {
             nearDoor = false;
+        }
+
+        if (other.tag == "SafeRoom")
+        {
+            inSafeRoom = false;
         }
     }
 
@@ -117,7 +128,7 @@ public class Player : MonoBehaviour
         gameManager.LivesUI(lives);
         if (lives <= 0)
         {
-            Debug.Log("You died");
+            gameManager.Death();
         }
     }
 }

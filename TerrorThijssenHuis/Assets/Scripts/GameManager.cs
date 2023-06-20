@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject occlusionSquares;
     public Image[] livesImages;
+    [SerializeField] private GameObject deathBackground;
+    [SerializeField] private GameObject deathUI;
     
     void Start()
     {
@@ -20,5 +22,12 @@ public class GameManager : MonoBehaviour
     public void LivesUI(int life)
     {
         Destroy(livesImages[life]);
+    }
+
+    public void Death()
+    {
+        Time.timeScale = 0;
+        deathBackground.SetActive(true);
+        deathUI.SetActive(true);
     }
 }
