@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
     private Vector2 targetPosition;
 
     public Player player;
+    public Transform waypoint;
+    private bool reachedWaypoint = false;
     public float roomBounds;
     private bool inNativeRoom = true;
 
@@ -35,37 +37,52 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.x < player.transform.position.x)
+        {
+            sr.flipX = true;
+        }
+        else
+        {
+            sr.flipX = false;
+        }
+
         if (transform.position.x < roomBounds)
         {
             inNativeRoom = false;
+        }
+
+        else
+        {
+            inNativeRoom = true;
+            reachedWaypoint = false;
         }
 
         if (target != null)
         {
             float step = movementSpeed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, target.position, step);
-        
-            if (transform.position.x < target.position.x)
-            {
-                sr.flipX = true;
-            }
-            else
-            {
-                sr.flipX = false;
-            }
         }
+
         else
         {
-            if (player.inSafeRoom == false)
+            if (!inNativeRoom && reachedWaypoint == false)
+            {
+                targetPosition = new Vector2(waypoint.position.x, waypoint.position.y);
+                if (new Vector2(transform.position.x, transform.position.y) == targetPosition)
+                {
+                    reachedWaypoint = true;
+                }
+            }
+            else if (!inNativeRoom && reachedWaypoint == true)
+            {
+                targetPosition = startingPosition;
+            }
+            else
             {
                 if (ReachedTargetPosition())
                 {
                     SetRandomTargetPosition();
                 }
-            }
-            else
-            {
-                // Check of ze in hallway of kamer zijn
             }
 
             MoveTowardsTargetPosition();
