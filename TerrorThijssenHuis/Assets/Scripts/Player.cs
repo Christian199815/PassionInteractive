@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private Animator animator;
     public float movementSpeed = 2.5f;
 
     private int lives = 5;
@@ -18,7 +19,6 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool notHit = true;
 
     public Text interactionText;
-    [SerializeField] private Vector2 interactionTextOffset = new Vector2();
 
     public Material[] spriteMaterials;
 
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         sr = this.GetComponent<SpriteRenderer>();
+        animator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -46,17 +47,27 @@ public class Player : MonoBehaviour
         float verInput = Input.GetAxisRaw("Vertical");
 
         rb.velocity = new Vector2(horInput * movementSpeed, verInput * movementSpeed);
+
+        if (rb.velocity != Vector2.zero)
+        {
+            animator.SetBool("isWalking", true);
+        }
+
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
     }
 
     void FlipSprite()
     {
-        if (rb.velocity.x < 0)
+        if (rb.velocity.x > 0)
         {
-            sr.flipX = true; // Player is moving left, flip sprite
+            sr.flipX = true;
         }
-        else if (rb.velocity.x > 0)
+        else if (rb.velocity.x < 0)
         {
-            sr.flipX = false; // Player is moving right, don't flip sprite
+            sr.flipX = false;
         }
     }
 
@@ -81,12 +92,6 @@ public class Player : MonoBehaviour
         {
             interactionText.text = "";
         }
-    }
-
-    public void LateUpdate()
-    {
-        interactionText.transform.position = new Vector2(Camera.main.WorldToScreenPoint(transform.position).x + interactionTextOffset.x, 
-                                                        Camera.main.WorldToScreenPoint(transform.position).y + interactionTextOffset.y);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

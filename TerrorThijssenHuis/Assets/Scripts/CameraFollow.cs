@@ -51,14 +51,6 @@ public class CameraFollow : MonoBehaviour
         {
             this.transform.position = CameraRoomPositions[5].position;
         }
-        else if (playerLocs[6] == true)
-        {
-            this.transform.position = CameraRoomPositions[6].position;
-        }
-        else if (playerLocs[7] == true)
-        {
-            this.transform.position = CameraRoomPositions[7].position;
-        }
         
     }
 
@@ -70,6 +62,16 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (playerLocs[6] == true)
+        {
+            this.transform.position = new Vector3(CameraRoomPositions[10].position.x, this.transform.position.y, this.transform.position.z);
+            FollowOnVertical();
+        }
+        if (playerLocs[7] == true)
+        {
+            this.transform.position = new Vector3(CameraRoomPositions[10].position.x, this.transform.position.y, this.transform.position.z);
+            FollowOnVertical();
+        }
         if (playerLocs[8] == true)
         {
             this.transform.position = new Vector3(CameraRoomPositions[10].position.x, this.transform.position.y, this.transform.position.z);
