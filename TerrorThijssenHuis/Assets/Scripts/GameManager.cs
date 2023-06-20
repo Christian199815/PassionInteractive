@@ -7,9 +7,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject occlusionSquares;
-    public Image[] livesImages;
+    public List<GameObject> livesObjects = new List<GameObject>();
     [SerializeField] private GameObject deathBackground;
     [SerializeField] private GameObject deathUI;
+    [SerializeField] public Player player;
+
+    [SerializeField] private Transform LiftArea1;
+    [SerializeField] private Transform LiftEnd;
     
     void Start()
     {
@@ -18,12 +22,74 @@ public class GameManager : MonoBehaviour
             Transform child = occlusionSquares.transform.GetChild(i);
             child.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 255);
         }
+
+        
     }
 
-    public void LivesUI(int life)
+
+
+    public void StartExploring()
     {
-        Destroy(livesImages[life]);
+        player.transform.position = new Vector3(6, 46, transform.position.z);
     }
+
+    public void EndExploring()
+    {
+        player.transform.position = new Vector3(-12, -46 ,transform.position.z);
+    }
+
+    void DisplayLivesUI()
+    {
+        switch(player.lives)
+        {
+            case 5:
+                livesObjects[4].SetActive(true);
+                livesObjects[3].SetActive(true);
+                livesObjects[2].SetActive(true);
+                livesObjects[1].SetActive(true);
+                livesObjects[0].SetActive(true);
+                break;
+            case 4:
+                livesObjects[4].SetActive(false);
+                livesObjects[3].SetActive(true);
+                livesObjects[2].SetActive(true);
+                livesObjects[1].SetActive(true);
+                livesObjects[0].SetActive(true);
+                break;
+            case 3:
+                livesObjects[3].SetActive(false);
+                livesObjects[2].SetActive(true);
+                livesObjects[1].SetActive(true);
+                livesObjects[0].SetActive(true);
+                break;
+            case 2:
+                livesObjects[2].SetActive(false);
+                livesObjects[1].SetActive(true);
+                livesObjects[0].SetActive(true);
+                break;
+            case 1:
+                livesObjects[1].SetActive(false);
+                livesObjects[0].SetActive(true);
+                break;
+        }
+    
+    }
+
+
+    private void Update()
+    {
+        DisplayLivesUI();
+    }
+
+    //public void RemoveLifeUI(int life)
+    //{
+    //    livesImages.Remove(livesImages[life]);
+    //}
+
+    //public void AddLifeUI(int life)
+    //{
+    //    livesImages.Add(livesImages[life]);
+    //}
 
     public void Death()
     {

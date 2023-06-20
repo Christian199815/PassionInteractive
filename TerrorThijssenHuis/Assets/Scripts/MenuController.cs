@@ -14,7 +14,7 @@ public class MenuController : MonoBehaviour
 
     public void PlayButton()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene(1);
     }
 
     public void SettingsButton()

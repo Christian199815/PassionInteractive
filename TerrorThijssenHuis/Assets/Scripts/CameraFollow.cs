@@ -51,7 +51,15 @@ public class CameraFollow : MonoBehaviour
         {
             this.transform.position = CameraRoomPositions[5].position;
         }
-        
+        else if (playerLocs[10] == true)
+        {
+            this.transform.position = CameraRoomPositions[8].position;
+        }
+        else if (playerLocs[9] == true)
+        {
+            this.transform.position = CameraRoomPositions[9].position;
+        }
+
     }
 
 
