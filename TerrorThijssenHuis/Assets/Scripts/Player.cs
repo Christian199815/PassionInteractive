@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+
 public class Player : MonoBehaviour
 {
     public GameManager gameManager;
@@ -13,15 +15,17 @@ public class Player : MonoBehaviour
     private Animator animator;
     public float movementSpeed = 2.5f;
 
-   [SerializeField] private DialogueUI DUI;
+    [SerializeField] private DialogueUI DUI;
 
     [SerializeField] public int lives = 5;
     private List<string> inventory = new List<string>();
     private bool nearDoor = false;
     private bool liftDoor1 = false;
     private bool liftDoor2 = false;
-    private bool inSafeRoom = false;
+    public bool inSafeRoom = false;
     [HideInInspector] public bool notHit = true;
+
+    private Coroutine addLivesCoroutine;
 
     public Text interactionText;
 
@@ -33,7 +37,7 @@ public class Player : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         sr = this.GetComponent<SpriteRenderer>();
         animator = this.GetComponent<Animator>();
-        
+
     }
 
     // Update is called once per frame
@@ -44,7 +48,7 @@ public class Player : MonoBehaviour
             Move();
             FlipSprite();
             CheckDoor();
-            InSafeRoom();
+            RegenerateHealth();
         }
     }
 
@@ -99,13 +103,13 @@ public class Player : MonoBehaviour
                     }
                     else
                     {
-                       
+
                     }
                 }
 
                 //if is lift door do next
 
-                
+
             }
         }
         else if (liftDoor1)
@@ -117,7 +121,7 @@ public class Player : MonoBehaviour
                 DUI.playMessage(2, DUI.messageDisplaySeconds);
             }
         }
-        else if(liftDoor2)
+        else if (liftDoor2)
         {
             interactionText.text = "Press 'E' to open door";
             if (Input.GetKeyDown(KeyCode.E))
@@ -126,7 +130,7 @@ public class Player : MonoBehaviour
                 DUI.playMessage(11, DUI.messageDisplaySeconds);
             }
         }
-        else 
+        else
         {
             interactionText.text = "";
         }
@@ -134,7 +138,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        switch(other.tag)
+        switch (other.tag)
         {
             case "Key":
                 Destroy(other.gameObject);
@@ -155,7 +159,7 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-    
+
     private void OnTriggerExit2D(Collider2D other)
     {
         switch (other.tag)
@@ -175,30 +179,75 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void LoseLife()
+    //public void LoseLife()
+    //{
+    //    lives--;
+    //    DUI.playMessage(7, 2);
+    //    if (lives <= 0)
+    //    {
+    //        gameManager.Death();
+    //    }
+    //}
+
+
+    //public void InSafeRoom()
+    //{
+    //    if (inSafeRoom && lives >= 1)
+    //    {
+    //        StartCoroutine(MentalHealthTimer(5));
+    //    }
+    //}
+
+
+    //IEnumerator MentalHealthTimer(int seconds)
+    //{
+    //    yield return new WaitForSeconds(seconds);
+    //    lives = 5;
+    //}
+
+
+
+    public void LoseLife(int damage)
     {
-        lives--;
-        DUI.playMessage(7, 2); 
+        lives = lives - damage;
         if (lives <= 0)
         {
             gameManager.Death();
         }
     }
 
-
-    public void InSafeRoom()
+    void RegenerateHealth()
     {
-        if(inSafeRoom && lives >= 1)
+        if (inSafeRoom)
         {
-            StartCoroutine(MentalHealthTimer(5));
+            if (addLivesCoroutine == null)
+            {
+                addLivesCoroutine = StartCoroutine(AddLivesCoroutine());
+            }
+        }
+        else
+        {
+            if (addLivesCoroutine != null)
+            {
+                StopCoroutine(addLivesCoroutine);
+                addLivesCoroutine = null;
+            }
         }
     }
 
-
-    IEnumerator MentalHealthTimer(int seconds)
+    private IEnumerator AddLivesCoroutine()
     {
-        yield return new WaitForSeconds(seconds);
-        lives = 5;
-    }
+        while (true)
+        {
+            yield return new WaitForSeconds(2.5f);
 
+            if (lives < 5)
+            {
+                // Add 1 to live
+                lives++;
+            }
+        }
+
+    }
 }
+
