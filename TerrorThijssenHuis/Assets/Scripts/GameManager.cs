@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,5 +30,17 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         deathBackground.SetActive(true);
         deathUI.SetActive(true);
+    }
+
+    public void Respawn()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Main");
+    }
+
+    public void BackToMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Menu");
     }
 }
