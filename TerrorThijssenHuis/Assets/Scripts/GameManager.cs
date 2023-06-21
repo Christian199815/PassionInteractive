@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
         
     }
 
-
-
     public void StartExploring()
     {
         player.transform.position = new Vector3(6, 46, transform.position.z);
@@ -38,49 +36,6 @@ public class GameManager : MonoBehaviour
     {
         player.transform.position = new Vector3(-12, -46 ,transform.position.z);
     }
-
-    // void DisplayLivesUI()
-    // {
-    //     switch(player.lives)
-    //     {
-    //         case 5:
-    //             livesObjects[4].SetActive(true);
-    //             livesObjects[3].SetActive(true);
-    //             livesObjects[2].SetActive(true);
-    //             livesObjects[1].SetActive(true);
-    //             livesObjects[0].SetActive(true);
-    //             break;
-    //         case 4:
-    //             livesObjects[4].SetActive(false);
-    //             livesObjects[3].SetActive(true);
-    //             livesObjects[2].SetActive(true);
-    //             livesObjects[1].SetActive(true);
-    //             livesObjects[0].SetActive(true);
-    //             break;
-    //         case 3:
-    //             livesObjects[3].SetActive(false);
-    //             livesObjects[2].SetActive(true);
-    //             livesObjects[1].SetActive(true);
-    //             livesObjects[0].SetActive(true);
-    //             break;
-    //         case 2:
-    //             livesObjects[2].SetActive(false);
-    //             livesObjects[1].SetActive(true);
-    //             livesObjects[0].SetActive(true);
-    //             break;
-    //         case 1:
-    //             livesObjects[1].SetActive(false);
-    //             livesObjects[0].SetActive(true);
-    //             break;
-    //     }
-    
-    // }
-
-
-    // private void Update()
-    // {
-    //     DisplayLivesUI();
-    // }
 
     public void AddLifeUI(int life)
     {

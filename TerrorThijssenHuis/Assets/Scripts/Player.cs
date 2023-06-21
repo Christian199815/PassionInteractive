@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     public bool inSafeRoom = false;
     [HideInInspector] public bool notHit = true;
 
+    public bool Cut1, Cut2, Cut3;
+
     private Coroutine addLivesCoroutine;
 
     public Text interactionText;

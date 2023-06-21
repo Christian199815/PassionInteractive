@@ -14,9 +14,12 @@ public class DialogueUI : MonoBehaviour
 
     public int messageDisplaySeconds = 3;
 
+    public GameObject WinUI;
+    public Player player;
+
     private void Start()
     {
-        playMessage(2, messageDisplaySeconds);
+        playMessage(0, messageDisplaySeconds);
     }
 
     // Update is called once per frame
@@ -89,6 +92,7 @@ public class DialogueUI : MonoBehaviour
         {
             case 0:
                 playMessage(1, messageDisplaySeconds);
+                player.Cut1 = true;
                 break;
             case 2:
                 playMessage(3, messageDisplaySeconds);
@@ -101,6 +105,9 @@ public class DialogueUI : MonoBehaviour
                 break;
             case 13:
                 playMessage(14, messageDisplaySeconds);
+                break;
+            case 14:
+                WinUI.SetActive(true);
                 break;
         }
 
