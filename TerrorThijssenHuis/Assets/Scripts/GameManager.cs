@@ -18,11 +18,11 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        for (int i = 0; i < occlusionSquares.transform.childCount; i++)
-        {
-            Transform child = occlusionSquares.transform.GetChild(i);
-            child.GetComponent<SpriteRenderer>().color = hiddenColor;
-        }
+        // for (int i = 0; i < occlusionSquares.transform.childCount; i++)
+        // {
+        //     Transform child = occlusionSquares.transform.GetChild(i);
+        //     child.GetComponent<SpriteRenderer>().color = hiddenColor;
+        // }
 
         
     }

@@ -19,22 +19,22 @@ public class UnhideLevel : MonoBehaviour
         CF = FindObjectOfType<Camera>().GetComponent<CameraFollow>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-       if (collision.transform.CompareTag("Player"))
-       {
-            if (!UITriggered) { DUI.playRoomMessage(this.name); UITriggered = true; }
-            CF.playerLocs[locationIndex] = true;
-            SR.color = new Color(0, 0, 0, 0);
-       }
-    }
+    // private void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //    if (collision.transform.CompareTag("Player"))
+    //    {
+    //         if (!UITriggered) { DUI.playRoomMessage(this.name); UITriggered = true; }
+    //         CF.playerLocs[locationIndex] = true;
+    //         SR.color = new Color(0, 0, 0, 0);
+    //    }
+    // }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Player"))
-       {
-            CF.playerLocs[locationIndex] = false;
-            SR.color = hiddenColor;
-       }
-    }
+    // private void OnTriggerExit2D(Collider2D collision)
+    // {
+    //     if (collision.transform.CompareTag("Player"))
+    //    {
+    //         CF.playerLocs[locationIndex] = false;
+    //         SR.color = hiddenColor;
+    //    }
+    // }
 }
