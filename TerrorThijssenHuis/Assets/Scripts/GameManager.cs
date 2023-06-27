@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
         
     }
 
-
-
     public void StartExploring()
     {
         player.transform.position = new Vector3(6, 46, transform.position.z);
