@@ -16,7 +16,7 @@ public class DialogueUI : MonoBehaviour
 
     private void Start()
     {
-        playMessage(2, messageDisplaySeconds);
+        playMessage(28, messageDisplaySeconds);
     }
 
     // Update is called once per frame
@@ -31,8 +31,6 @@ public class DialogueUI : MonoBehaviour
         StartCoroutine(messageTimer(seconds, messageIndex));
         
     }
-
-
 
     public void playRoomMessage(string roomName)
     {
@@ -65,6 +63,9 @@ public class DialogueUI : MonoBehaviour
             case "Hallway":
                 playMessage(4, messageDisplaySeconds);
                 break;
+            case "LiftTriggerStart":
+                playMessage(30, messageDisplaySeconds);
+                break;
 
         }
     }
@@ -75,8 +76,6 @@ public class DialogueUI : MonoBehaviour
         currMessageIndex = messageIndex;
         dialogueText.text = "";
     }
-
-
 
     public void RemoveMessage()
     {
@@ -101,6 +100,7 @@ public class DialogueUI : MonoBehaviour
                 break;
             case 13:
                 playMessage(14, messageDisplaySeconds);
+                GameObject.FindWithTag("GameController").GetComponent<GameManager>().ActivateEnd();
                 break;
         }
 

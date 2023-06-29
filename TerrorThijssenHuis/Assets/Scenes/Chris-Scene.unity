@@ -706,6 +706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 2
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &120105263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,6 +1967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1961683413}
+  spotlight: {fileID: 0}
   movementSpeed: 6
   DUI: {fileID: 1961683414}
   lives: 3
@@ -2520,6 +2522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 3
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &532085660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,6 +2781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 1
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &565911889
 GameObject:
   m_ObjectHideFlags: 0
@@ -3993,6 +3997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 9
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &805669083
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4347,6 +4352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 4
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &912432202
 GameObject:
   m_ObjectHideFlags: 0
@@ -5678,6 +5684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 6
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1281404071
 GameObject:
   m_ObjectHideFlags: 0
@@ -6002,6 +6009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 10
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &1292934538
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6199,6 +6207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 0
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1329230008
 GameObject:
   m_ObjectHideFlags: 0
@@ -8594,6 +8603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 7
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1713279260
 GameObject:
   m_ObjectHideFlags: 0
@@ -9046,6 +9056,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 5
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1762292051
 GameObject:
   m_ObjectHideFlags: 0
@@ -9232,6 +9243,7 @@ MonoBehaviour:
   damageAmount: 1
   maxDistanceFromStart: 3
   player: {fileID: 456656216}
+  waypoint: {fileID: 0}
   roomBounds: 0
 --- !u!58 &1795801968
 CircleCollider2D:
@@ -9980,9 +9992,13 @@ MonoBehaviour:
   - {fileID: 1468793234}
   deathBackground: {fileID: 717074359}
   deathUI: {fileID: 1000519926}
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
   player: {fileID: 456656216}
+  LiftStart: {fileID: 0}
   LiftArea1: {fileID: 1603378315}
   LiftEnd: {fileID: 288764299}
+  BGLift: {fileID: 0}
+  objectiveText: {fileID: 0}
 --- !u!114 &1961683414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10516,6 +10532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DUI: {fileID: 1961683414}
   locationIndex: 8
+  hiddenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2052714327
 GameObject:
   m_ObjectHideFlags: 0

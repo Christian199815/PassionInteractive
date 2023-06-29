@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02db48ad016174b6db6d6a6804913576, type: 3}
   m_Name: HallWay2
   m_EditorClassIdentifier: 
-  location: Hallway
-  action: CollisionDoorsWithoutKey
-  message: Deze deuren zitten op slot, volgens mij heb ik een sleutel nodig
+  message: Deze deur heeft drie sloten? No way!

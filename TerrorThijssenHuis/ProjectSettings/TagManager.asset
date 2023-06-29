@@ -11,6 +11,7 @@ TagManager:
   - LiftDoor
   - LiftDoor1
   - LiftDoor2
+  - LiftDoor3
   layers:
   - Default
   - TransparentFX

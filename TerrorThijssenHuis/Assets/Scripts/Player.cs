@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator animator;
+    public GameObject spotlight;
     public float movementSpeed = 2.5f;
 
     [SerializeField] private DialogueUI DUI;
@@ -22,8 +23,10 @@ public class Player : MonoBehaviour
     private bool nearDoor = false;
     private bool liftDoor1 = false;
     private bool liftDoor2 = false;
+    private bool liftDoor3 = false;
     public bool inSafeRoom = false;
     [HideInInspector] public bool notHit = true;
+    private int keyCount;
 
     private Coroutine addLivesCoroutine;
 
@@ -37,7 +40,7 @@ public class Player : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         sr = this.GetComponent<SpriteRenderer>();
         animator = this.GetComponent<Animator>();
-
+        spotlight.SetActive(false);
     }
 
     // Update is called once per frame
@@ -89,17 +92,16 @@ public class Player : MonoBehaviour
             interactionText.text = "Press 'E' to open door";
             if (Input.GetKeyDown(KeyCode.E))
             {
-                //if is southdoor do next
                 DUI.playMessage(5, 2);
+                gameManager.UpdateObjectiveKey(keyCount);
 
                 for (int i = 0; i < inventory.Count; i++)
                 {
-                    if (inventory[i] == "Key")
+                    if (keyCount >= 3)
                     {
-                        // Open door (replace later with more suitable behavior)
+                        Debug.Log("Drie keys");
                         Destroy(GameObject.FindWithTag("Door"));
                         DUI.playMessage(6, 2);
-
                     }
                     else
                     {
@@ -130,6 +132,15 @@ public class Player : MonoBehaviour
                 DUI.playMessage(11, DUI.messageDisplaySeconds);
             }
         }
+        else if (liftDoor3)
+        {
+            interactionText.text = "Press 'E' to open door";
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                gameManager.IntroEnd();
+                DUI.playMessage(29, DUI.messageDisplaySeconds);
+            }
+        }
         else
         {
             interactionText.text = "";
@@ -142,6 +153,8 @@ public class Player : MonoBehaviour
         {
             case "Key":
                 Destroy(other.gameObject);
+                keyCount++;
+                gameManager.UpdateObjectiveKey(keyCount);
                 inventory.Add("Key");
                 DUI.playMessage(8, 3);
                 break;
@@ -153,6 +166,9 @@ public class Player : MonoBehaviour
                 break;
             case "LiftDoor2":
                 liftDoor2 = true;
+                break;
+            case "LiftDoor3":
+                liftDoor3 = true;
                 break;
             case "SafeRoom":
                 inSafeRoom = true;
@@ -172,6 +188,9 @@ public class Player : MonoBehaviour
                 break;
             case "LiftDoor2":
                 liftDoor2 = false;
+                break;
+            case "LiftDoor3":
+                liftDoor3 = false;
                 break;
             case "SafeRoom":
                 inSafeRoom = false;

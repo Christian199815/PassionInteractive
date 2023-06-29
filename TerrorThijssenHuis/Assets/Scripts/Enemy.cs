@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
 
     public float movementSpeed = 2f;
+    private float defaultMovementSpeed;
 
     public float knockbackForce = 100f;
     public float slideDuration = 0.2f;
@@ -15,6 +16,8 @@ public class Enemy : MonoBehaviour
     private Transform target;
     private SpriteRenderer sr;
     private Rigidbody2D playerRigidbody;
+    private Animator animator;
+    private Rigidbody2D rb;
     private Coroutine slideCoroutine;
 
     public float maxDistanceFromStart = 3f;
@@ -28,6 +31,7 @@ public class Enemy : MonoBehaviour
     public float roomBounds;
     private bool inNativeRoom = true;
 
+    private bool walking = true;
     private bool isIdleMoving;
     private float movementDuration = 5f;
     private float movementTimer;
@@ -35,12 +39,28 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        animator = this.GetComponent<Animator>();
+        rb = this.GetComponent<Rigidbody2D>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         startingPosition = transform.position;
         SetRandomTargetPosition();
+        defaultMovementSpeed = movementSpeed;
     }
 
     private void Update()
     {
+        if (walking)
+        {
+            movementSpeed = defaultMovementSpeed;
+            animator.SetBool("isWalking", true);
+        }
+
+        else
+        {
+            movementSpeed = 0f;
+            animator.SetBool("isWalking", false);
+        }
+
         if (transform.position.x < player.transform.position.x)
         {
             sr.flipX = true;
@@ -85,6 +105,7 @@ public class Enemy : MonoBehaviour
             {
                 if (isIdleMoving && movementTimer >= movementDuration)
                 {
+                    StartCoroutine(IdleCoroutine());
                     isIdleMoving = false;
                     SetRandomTargetPosition();
                 }
@@ -101,6 +122,14 @@ public class Enemy : MonoBehaviour
 
             movementTimer += Time.deltaTime;
         }
+    }
+
+    IEnumerator IdleCoroutine()
+    {
+        walking = false;
+        float RandomNum = Random.Range(2.0f, 5.0f);
+        yield return new WaitForSeconds(RandomNum);
+        walking = true;
     }
 
     private bool ReachedTargetPosition()

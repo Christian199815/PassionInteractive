@@ -10,11 +10,17 @@ public class GameManager : MonoBehaviour
     public GameObject[] livesObjects;
     [SerializeField] private GameObject deathBackground;
     [SerializeField] private GameObject deathUI;
+    [SerializeField] private GameObject endBackground;
+    [SerializeField] private GameObject endUI;
     public Color hiddenColor;
     [SerializeField] public Player player;
 
+    [SerializeField] private Transform LiftStart;
     [SerializeField] private Transform LiftArea1;
     [SerializeField] private Transform LiftEnd;
+    [SerializeField] private Transform BGLift;
+
+    [SerializeField] private Text objectiveText;
     
     void Start()
     {
@@ -22,9 +28,29 @@ public class GameManager : MonoBehaviour
         // {
         //     Transform child = occlusionSquares.transform.GetChild(i);
         //     child.GetComponent<SpriteRenderer>().color = hiddenColor;
-        // }
+        // }        
+    }
 
-        
+    public void IntroEnd()
+    {
+        player.transform.position = BGLift.position;
+        StartCoroutine(WaitInLift());
+    }
+
+    IEnumerator WaitInLift()
+    {
+        yield return new WaitForSeconds(3);
+        player.transform.position = LiftStart.position;
+        objectiveText.text = "Ga naar de andere lift";
+    }
+
+    public void UpdateObjectiveKey(int keys)
+    {
+        objectiveText.text = "Vind de " + (3 - keys) + " sleutels";
+        if (keys == 3)
+        {
+            objectiveText.text = "Open de deur aan het einde van de gang";
+        }
     }
 
     public void StartExploring()
@@ -74,7 +100,6 @@ public class GameManager : MonoBehaviour
     
     // }
 
-
     // private void Update()
     // {
     //     DisplayLivesUI();
@@ -115,6 +140,17 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Main");
+    }
+
+    public void ActivateEnd()
+    {
+        endBackground.SetActive(true);
+        endUI.SetActive(true);
+    }
+
+    public void MentalHealthLink()
+    {
+        Application.OpenURL("https://www.hva.nl/studeren/studiekeuze/naast-je-opleiding/ondersteuning");
     }
 
     public void BackToMenu()
