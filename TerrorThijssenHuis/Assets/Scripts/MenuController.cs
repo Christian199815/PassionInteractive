@@ -9,6 +9,7 @@ public class MenuController : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject creditsPanel;
 
     private bool isFullscreen = false;
 
@@ -21,6 +22,12 @@ public class MenuController : MonoBehaviour
     {
         mainMenuPanel.SetActive(false);
         settingsPanel.SetActive(true);
+    }
+
+    public void CreditsButton()
+    {
+        mainMenuPanel.SetActive(false);
+        creditsPanel.SetActive(true);
     }
 
     public void ExitButton()
@@ -36,6 +43,12 @@ public class MenuController : MonoBehaviour
     {
         mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
+    }
+
+    public void CreditsBackButton()
+    {
+        mainMenuPanel.SetActive(true);
+        creditsPanel.SetActive(false);
     }
 
     public void ToggleFullscreen()

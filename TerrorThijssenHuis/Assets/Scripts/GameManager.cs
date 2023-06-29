@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform LiftEnd;
     [SerializeField] private Transform BGLift;
 
+    [SerializeField] private AudioClip scaryMusic;
+
     [SerializeField] private Text objectiveText;
     
     void Start()
@@ -40,17 +42,34 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitInLift()
     {
         yield return new WaitForSeconds(3);
+        GetComponent<AudioSource>().clip = scaryMusic;
+        GetComponent<AudioSource>().Play();
         player.transform.position = LiftStart.position;
+        player.LiftShutdown();
         objectiveText.text = "Ga naar de andere lift";
     }
 
     public void UpdateObjectiveKey(int keys)
     {
         objectiveText.text = "Vind de " + (3 - keys) + " sleutels";
+        if (keys == 2)
+        {
+            objectiveText.text = "Vind de laatste sleutel";
+        }
         if (keys == 3)
         {
             objectiveText.text = "Open de deur aan het einde van de gang";
         }
+    }
+
+    public void UpdateObjectiveLast()
+    {
+        objectiveText.text = "Ga naar de lift aan het einde van de gang";
+    }
+
+    public void UpdateObjectiveLastLift()
+    {
+        objectiveText.text = "Adem in, adem uit...";
     }
 
     public void StartExploring()
@@ -144,6 +163,7 @@ public class GameManager : MonoBehaviour
 
     public void ActivateEnd()
     {
+        player.transform.position = BGLift.position;
         endBackground.SetActive(true);
         endUI.SetActive(true);
     }

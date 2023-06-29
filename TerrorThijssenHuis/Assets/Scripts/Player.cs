@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator animator;
+    private AudioSource audioSource;
     public GameObject spotlight;
     public float movementSpeed = 2.5f;
 
@@ -34,12 +35,17 @@ public class Player : MonoBehaviour
 
     public Material[] spriteMaterials;
 
+    [SerializeField] private AudioSource footstep;
+
+    [SerializeField] private AudioClip[] audioClips;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
         sr = this.GetComponent<SpriteRenderer>();
         animator = this.GetComponent<Animator>();
+        audioSource = this.GetComponent<AudioSource>();
         spotlight.SetActive(false);
     }
 
@@ -93,13 +99,18 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 DUI.playMessage(5, 2);
+                if (keyCount < 3)
+                {
+                    audioSource.PlayOneShot(audioClips[5]);
+                }
                 gameManager.UpdateObjectiveKey(keyCount);
 
                 for (int i = 0; i < inventory.Count; i++)
                 {
                     if (keyCount >= 3)
                     {
-                        Debug.Log("Drie keys");
+                        audioSource.PlayOneShot(audioClips[4]);
+                        gameManager.UpdateObjectiveLast();
                         Destroy(GameObject.FindWithTag("Door"));
                         DUI.playMessage(6, 2);
                     }
@@ -119,6 +130,7 @@ public class Player : MonoBehaviour
             interactionText.text = "Press 'E' to open door";
             if (Input.GetKeyDown(KeyCode.E))
             {
+                audioSource.PlayOneShot(audioClips[6]);
                 gameManager.StartExploring();
                 DUI.playMessage(2, DUI.messageDisplaySeconds);
             }
@@ -128,7 +140,9 @@ public class Player : MonoBehaviour
             interactionText.text = "Press 'E' to open door";
             if (Input.GetKeyDown(KeyCode.E))
             {
+                audioSource.PlayOneShot(audioClips[6]);
                 gameManager.EndExploring();
+                gameManager.UpdateObjectiveLastLift();
                 DUI.playMessage(11, DUI.messageDisplaySeconds);
             }
         }
@@ -137,6 +151,7 @@ public class Player : MonoBehaviour
             interactionText.text = "Press 'E' to open door";
             if (Input.GetKeyDown(KeyCode.E))
             {
+                audioSource.PlayOneShot(audioClips[6]);
                 gameManager.IntroEnd();
                 DUI.playMessage(29, DUI.messageDisplaySeconds);
             }
@@ -147,11 +162,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void LiftShutdown()
+    {
+        audioSource.PlayOneShot(audioClips[7]);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch (other.tag)
         {
             case "Key":
+                audioSource.PlayOneShot(audioClips[2]);
                 Destroy(other.gameObject);
                 keyCount++;
                 gameManager.UpdateObjectiveKey(keyCount);
@@ -224,8 +245,15 @@ public class Player : MonoBehaviour
     //    lives = 5;
     //}
 
+    public void Footstep()
+    {
+        footstep.pitch = (Random.Range(0.7f, 1.3f));
+        footstep.PlayOneShot(audioClips[3]);
+    }
+
     public void LoseLife(int damage)
     {
+        audioSource.PlayOneShot(audioClips[0]);
         lives = lives - damage;
         gameManager.RemoveLifeUI(lives);
         if (lives <= 0)
@@ -261,6 +289,7 @@ public class Player : MonoBehaviour
 
             if (lives < 5)
             {
+                audioSource.PlayOneShot(audioClips[1]);
                 gameManager.AddLifeUI(lives);
                 lives++;
             }
